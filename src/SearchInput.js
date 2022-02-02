@@ -17,8 +17,8 @@ const SearchInput = () => {
 
     
 
-    // const apiKey = "AIzaSyDyY5qs73NReShvEHIsRPVd2D9quIQpwrk";
-    // const apiKey = "AIzaSyAnxcg0QBysDxOYAnyl-MGmui8eVzuipW4";
+    // const apiKey = "";
+
     
 
     function handleInputChange(event){
