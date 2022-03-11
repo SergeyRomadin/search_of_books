@@ -5,12 +5,13 @@ import LoadMoreBtn from "./LoadMoreBtn";
 
 import { useSelector, useDispatch } from "react-redux";
 import BooksApi from "../api/BooksApi";
+import Preloader from "./Preloader";
 
 // https://github.com/fugr-ru/frontend-javascript-test-2
 
 export default function SearchInput() {
   const dispatch = useDispatch();
-  const [allBooks, setAllBooks] = useState([]);
+  // const [allBooks, setAllBooks] = useState([]);
   const [lastIndex, setLastIndex] = useState(30);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
@@ -18,7 +19,7 @@ export default function SearchInput() {
   const [sortingBy, setSortingBy] = useState("relevance");
   const [viewBook, setViewBook] = useState("");
 
-  const { books, isLoadingBooks, errorStatus, errorMessage } = useSelector(
+  const { books, isLoadingBooks, errorStatus, errorMessage, allResults } = useSelector(
     (state) => state.bookSlice.booksState
   );
 
@@ -26,26 +27,37 @@ export default function SearchInput() {
 
   const sortingChange = (event) => setSortingBy(event.target.value);
 
-  useEffect(() => setAllBooks(books), [books]);
+
+  // useEffect(() => dispatch(BooksApi.setDefState()));
+
+  console.log(isLoadingBooks)
 
   const getBooks = (e) => {
     e.preventDefault();
+    dispatch(BooksApi.setDefState());
     let params = `q=${query}+intitle:${query}${categoryQ}&orderBy=${sortingBy}&maxResults=30`;
     dispatch(BooksApi.getBooksByParams(params));
   };
 
-  function getMoreBooks() {
-    let url = `https://www.googleapis.com/books/v1/volumes?q=${query}+intitle:${query}${categoryQ}&orderBy=${sortingBy}&maxResults=30&startIndex=${lastIndex}`;
+  // function getMoreBooks() {
+  //   let url = `https://www.googleapis.com/books/v1/volumes?q=${query}+intitle:${query}${categoryQ}&orderBy=${sortingBy}&maxResults=30&startIndex=${lastIndex}`;
 
-    fetch(url)
-      .then((response) => response.json())
-      .then((responseData) => {
-        // console.log(responseData)
-        setAllBooks(books.items.concat(responseData.items));
-      });
+  //   fetch(url)
+  //     .then((response) => response.json())
+  //     .then((responseData) => {
+  //       // console.log(responseData)
+  //       setAllBooks(books.items.concat(responseData.items));
+  //     });
 
+  //   setLastIndex(lastIndex + 31);
+  // }
+
+  const getMoreBooks = () => {
+    let params = `q=${query}+intitle:${query}${categoryQ}&orderBy=${sortingBy}&maxResults=30&startIndex=${lastIndex}`
+    dispatch(BooksApi.getBooksByParams(params));
     setLastIndex(lastIndex + 31);
-  }
+  };
+
 
   function categoryChange(event) {
     setCategory(event.target.value);
@@ -90,7 +102,8 @@ export default function SearchInput() {
           <input type="submit" value="Search..." />
         </form>
       </div>
-      <BookItems books={allBooks} category={category} setView={setViewBook} />
+      <Preloader isLoading={isLoadingBooks}/>
+      <BookItems books={books} category={category} setView={setViewBook} allResults={allResults}/>
       <LoadMoreBtn
         books={books}
         getMoreBooks={getMoreBooks}

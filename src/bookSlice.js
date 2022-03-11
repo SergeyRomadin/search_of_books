@@ -6,7 +6,11 @@ const initialState = {
     isLoadingBooks: false,
     errorStatus: false, // true or false
     errorMessage: "",
+    allResults: 0,
   },
+  // allBooksState: {
+  //   allBooks: 
+  // }
 };
 
 const bookSlice = createSlice({
@@ -17,7 +21,8 @@ const bookSlice = createSlice({
       state.booksState.isLoadingBooks = payload;
     },
     setBooks(state, { payload }) {
-      state.booksState.books = payload;
+      state.booksState.books = [...state.booksState.books, ...payload];
+      
     },
     setError(state, { payload }) {
       const { message, status } = payload;
@@ -27,6 +32,12 @@ const bookSlice = createSlice({
     setDefState(state) {
       state.booksState = initialState.booksState;
     },
+    setAllResults(state, { payload }) {
+      state.booksState.allResults = payload;
+    }
+    // setNewBooks(state, {payload}){
+    //   state.booksState.books.push(payload)
+    // },
   },
 });
 

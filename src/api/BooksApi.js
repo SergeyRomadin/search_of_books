@@ -5,13 +5,14 @@ class BooksApi extends BaseApi {
   getBooksByParams(params) {
     return async (dispatch) => {
       try {
-        dispatch(booksSliceActions.setDefState());
+        // dispatch(booksSliceActions.setDefState());
         dispatch(booksSliceActions.setLoading(true));
 
         const url = `${this.baseURL}${params}`;
 
-        const { items } = await this.myFetch(url);
+        const { items, totalItems } = await this.myFetch(url);
 
+        dispatch(booksSliceActions.setAllResults(totalItems))
         dispatch(booksSliceActions.setBooks(items));
       } catch (e) {
         dispatch(
@@ -21,6 +22,9 @@ class BooksApi extends BaseApi {
         dispatch(booksSliceActions.setLoading(false));
       }
     };
+  }
+  setDefState() {
+    return (dispatch) => dispatch(booksSliceActions.setDefState());
   }
 }
 

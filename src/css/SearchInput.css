@@ -1,8 +1,10 @@
+.search__container {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  padding: 5px;
+}
 
-.search__container{
-    position: sticky;
-    top: 0;
-    background-color: white;
-    padding: 5px;
-
+.preloader {
+  max-width: 100%;
 }
