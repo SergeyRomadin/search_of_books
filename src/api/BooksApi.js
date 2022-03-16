@@ -2,10 +2,11 @@ import BaseApi from "./BaseApi";
 import { booksSliceActions } from "../bookSlice";
 
 class BooksApi extends BaseApi {
+  baseURL = "https://www.googleapis.com/books/v1/volumes?";
+
   getBooksByParams(params) {
     return async (dispatch) => {
       try {
-        // dispatch(booksSliceActions.setDefState());
         dispatch(booksSliceActions.setLoading(true));
 
         const url = `${this.baseURL}${params}`;

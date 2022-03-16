@@ -27,9 +27,6 @@ export default function SearchInput() {
 
   const sortingChange = (event) => setSortingBy(event.target.value);
 
-
-  // useEffect(() => dispatch(BooksApi.setDefState()));
-
   console.log(isLoadingBooks)
 
   const getBooks = (e) => {
@@ -39,25 +36,11 @@ export default function SearchInput() {
     dispatch(BooksApi.getBooksByParams(params));
   };
 
-  // function getMoreBooks() {
-  //   let url = `https://www.googleapis.com/books/v1/volumes?q=${query}+intitle:${query}${categoryQ}&orderBy=${sortingBy}&maxResults=30&startIndex=${lastIndex}`;
-
-  //   fetch(url)
-  //     .then((response) => response.json())
-  //     .then((responseData) => {
-  //       // console.log(responseData)
-  //       setAllBooks(books.items.concat(responseData.items));
-  //     });
-
-  //   setLastIndex(lastIndex + 31);
-  // }
-
   const getMoreBooks = () => {
     let params = `q=${query}+intitle:${query}${categoryQ}&orderBy=${sortingBy}&maxResults=30&startIndex=${lastIndex}`
     dispatch(BooksApi.getBooksByParams(params));
     setLastIndex(lastIndex + 31);
   };
-
 
   function categoryChange(event) {
     setCategory(event.target.value);

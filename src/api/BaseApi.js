@@ -1,12 +1,12 @@
 export default class BaseApi {
-  constructor() {
-    this.baseURL = "https://www.googleapis.com/books/v1/volumes?";
-  }
+  // constructor() {
+  //   this.baseURL = "https://www.googleapis.com/books/v1/volumes?";
+  // }
 
   async checkStatus(response) {
     try {
       if (response.status !== 200) {
-        const json = await response.json();
+        // const json = await response.json();
         throw new Error();
       }
       return await response.json();
