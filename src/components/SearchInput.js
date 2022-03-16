@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BookItems from "./BookItems";
 import "../css/SearchInput.css";
 import LoadMoreBtn from "./LoadMoreBtn";

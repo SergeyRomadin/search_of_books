@@ -22,23 +22,10 @@ export default function BookItems ({ books, categorie, setView, allResults})  {
     let item = books.find((item) => item.id === viewBook);
 
     const book = item.volumeInfo;
-    let src;
-    let category;
-
-    book.categories ? category = "[" + book.categories + "]" : category = null
-
-    if (!book.imageLinks) {
-      src = null;
-    } else {
-      if (
-        book.imageLinks.smallThumbnail &&
-        book.imageLinks.smallThumbnail !== undefined
-      ) {
-        src = book.imageLinks.smallThumbnail;
-      } else {
-        src = book.imageLinks.Thumbnail;
-      }
-    }
+    let src = null;
+    let category = book.categories ? "[" + book.categories + "]" : null;
+    
+    src = book?.imageLinks?.smallThumbnail || book?.imageLinks?.Thumbnail
 
     return (
       <div className="view-book">
@@ -62,25 +49,12 @@ export default function BookItems ({ books, categorie, setView, allResults})  {
         <ul className="books-list">
           {books.map((item, i) => {
             const book = item.volumeInfo;
-            let src;
-            let category;
+            
+            let src = null;
+            let category = book.categories ? "[" + book.categories + "]" : null;
             let id = item.id;
 
-            book.categories ? category = "[" + book.categories + "]" : category = null;
-            
-
-            if (!book.imageLinks) {
-              src = null;
-            } else {
-              if (
-                book.imageLinks.smallThumbnail &&
-                book.imageLinks.smallThumbnail !== undefined
-              ) {
-                src = book.imageLinks.smallThumbnail;
-              } else {
-                src = book.imageLinks.Thumbnail;
-              }
-            }
+            src = book?.imageLinks?.smallThumbnail || book?.imageLinks?.Thumbnail
 
             return (
               <li className="books-list__item" key={item.etag}>
